@@ -30,12 +30,11 @@ object SimUDuck {
   }
 
   trait MallardDuck extends Duck with FlyWithWings with Quack {
-  }
+  };import org.scalaide.worksheet.runtime.library.WorksheetSupport._; def main(args: Array[String])=$execute{;$skip(689); 
   
-  val m = new Duck("Mallard") with MallardDuck    //> m  : SimUDuck.Duck with SimUDuck.MallardDuck = SimUDuck$$anonfun$main$1$$ano
-                                                  //| n$1@5d6f64b1
-  m.fly                                           //> I can fly!
-  m.quack                                         //> It is quacking!
-  m.display                                       //> I look like Mallard
+  val m = new Duck("Mallard") with MallardDuck;System.out.println("""m  : SimUDuck.Duck with SimUDuck.MallardDuck = """ + $show(m ));$skip(8); 
+  m.fly;$skip(10); 
+  m.quack;$skip(12); 
+  m.display}
 
 }
