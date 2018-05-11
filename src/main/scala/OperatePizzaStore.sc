@@ -27,7 +27,7 @@ object OperatePizzaStore {
     def cut() { println("Cutting the pizza into 8 slices") }
     def box() { println("Place pizza in official PizzaStore box") }
     def getName(): String = name
-    def setName(newName: String) { name = newName }
+    def setName(newName: String) { this.name = newName }
   }
 
   /**
