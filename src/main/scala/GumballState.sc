@@ -22,7 +22,7 @@ object GumballState {
 
   class HasQuarterState(val machine: GumballMachine) extends State {
     val r = new scala.util.Random(System.currentTimeMillis())
-    
+
     def insertQuarter() {
       println("You can't insert another quarter")
     }
@@ -58,7 +58,7 @@ object GumballState {
       }
     }
   }
-  
+
   class WinnerState(val machine: GumballMachine) extends State {
     def insertQuarter() {
       println("Please wait, we're already giving you the gumballs")
@@ -75,8 +75,7 @@ object GumballState {
       if (machine.count > 0) {
         machine.releaseBall()
         machine.setState(machine.noQuarterState)
-      }
-      else {
+      } else {
         println("Oops, out of gumballs!")
         machine.setState(machine.soldOutState)
       }
@@ -112,24 +111,26 @@ object GumballState {
       println("A gumball comes rolling out the slot...")
       if (count != 0) count -= 1
     }
-    
-    override def toString() = "\nThere is " + count +
-    " gumballs left.\nAnd the state is " + state.getClass().getSimpleName
+    def refill(numGumballs: Int) {
+      count += numGumballs
+      this.state = noQuarterState
+    }
+
+    override def toString() = "### HeadFirst Gumball Machine ### \nThere is " + count +
+      " gumballs left.\nAnd the state is " + state.getClass().getSimpleName
   }
 
-  val gumballMachine = new GumballMachine(5)      //> gumballMachine  : GumballState.GumballMachine = 
+  val gumballMachine = new GumballMachine(5)      //> gumballMachine  : GumballState.GumballMachine = ### HeadFirst Gumball Machi
+                                                  //| ne ### 
                                                   //| There is 5 gumballs left.
                                                   //| And the state is NoQuarterState
   gumballMachine.insertQuarter()                  //> You inserted a quarter
   gumballMachine.turnCrank()                      //> You turned...
-                                                  //| ---*****----
-                                                  //| YOU WIN! Releasing two gumballs to you!
                                                   //| A gumball comes rolling out the slot...
-                                                  //| A gumball comes rolling out the slot...
-  println(gumballMachine)                         //> 
-                                                  //| There is 3 gumballs left.
+  println(gumballMachine)                         //> ### HeadFirst Gumball Machine ### 
+                                                  //| There is 4 gumballs left.
                                                   //| And the state is NoQuarterState
-  
+
   gumballMachine.insertQuarter()                  //> You inserted a quarter
   gumballMachine.ejectQuarter()                   //> Quarter returned
   gumballMachine.turnCrank()                      //> You turned, but there's no quarter
@@ -137,24 +138,24 @@ object GumballState {
   gumballMachine.insertQuarter()                  //> You inserted a quarter
   gumballMachine.insertQuarter()                  //> You can't insert another quarter
   gumballMachine.turnCrank()                      //> You turned...
-                                                  //| ---*****----
-                                                  //| YOU WIN! Releasing two gumballs to you!
-                                                  //| A gumball comes rolling out the slot...
                                                   //| A gumball comes rolling out the slot...
   gumballMachine.insertQuarter()                  //> You inserted a quarter
   gumballMachine.turnCrank()                      //> You turned...
                                                   //| A gumball comes rolling out the slot...
+  gumballMachine.insertQuarter()                  //> You inserted a quarter
+  gumballMachine.turnCrank()                      //> You turned...
+                                                  //| A gumball comes rolling out the slot...
+
+  gumballMachine.insertQuarter()                  //> You inserted a quarter
+  gumballMachine.turnCrank()                      //> You turned...
+                                                  //| A gumball comes rolling out the slot...
                                                   //| Oops, out of gumballs!
-  gumballMachine.insertQuarter()                  //> You can't insert a quarter, the machine is sold out
-  gumballMachine.turnCrank()                      //> You turned, but there are no gumballs
-                                                  //| No gumball dispensed
-  
-  gumballMachine.insertQuarter()                  //> You can't insert a quarter, the machine is sold out
-  gumballMachine.turnCrank()                      //> You turned, but there are no gumballs
-                                                  //| No gumball dispensed
-  println(gumballMachine)                         //> 
+  println(gumballMachine)                         //> ### HeadFirst Gumball Machine ### 
                                                   //| There is 0 gumballs left.
                                                   //| And the state is SoldOutState
-  
-  
+  gumballMachine.refill(3)
+  println(gumballMachine)                         //> ### HeadFirst Gumball Machine ### 
+                                                  //| There is 3 gumballs left.
+                                                  //| And the state is NoQuarterState
+
 }
